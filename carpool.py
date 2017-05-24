@@ -17,7 +17,6 @@ def main():
     while len(drivers) > 0:
         #choose random driver
         chosen_int = random.randint(0,len(drivers))
-        print chosen_int
         #roll if chosen driver gets a ticket
         roll = random.random()
         if roll <= drivers[chosen_int].prob_pulled_over:
