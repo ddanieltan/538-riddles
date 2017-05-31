@@ -7,3 +7,7 @@ You can run 100 meters in 15 seconds and swim 100 meters in 75 seconds.
 (The beach drops off steeply, meaning that you can’t run in the water.) 
 What’s the fastest you can get to the victim?
 """
+speed_on_sand = 100/15.0
+speed_in_water = 100/75.0
+
+#I don't get it.
