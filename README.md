@@ -1,5 +1,4 @@
-# 538-riddles
-Solving riddles from https://fivethirtyeight.com/tag/the-riddler/
+# coding-challenges#
+- *538-riddles* : Riddles from [https://fivethirtyeight.com/tag/the-riddler/]
+- *daily-programmer* : Challenges from [www.reddit.com/r/dailyprogramemr]
 
-to do
-- build web scraper to scrape all riddles
