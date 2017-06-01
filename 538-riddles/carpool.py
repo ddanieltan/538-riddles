@@ -1,4 +1,5 @@
 #!/usr/bin/env/python2.7
+# -*- coding: utf-8 -*-
 """
 Four co-workers carpool to work each day. 
 A driver is selected randomly for the drive to work and again randomly for the drive home. 
