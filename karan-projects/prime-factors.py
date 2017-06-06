@@ -24,8 +24,9 @@ def isprime(number):
 
 
 def main(number):
-   prime_factors = [d for d in xrange(1,number+1) if isprime(d)]
-   print prime_factors
+    divisors = [d for d in xrange(1,number+1) if number%d==0]
+    prime_factors = [f for f in divisors if isprime(f)]
+    print prime_factors
 
 if __name__ == "__main__":
     if len(sys.argv)!=2:
