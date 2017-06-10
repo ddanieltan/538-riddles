@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from collections import deque #double ended queue
 
-def walk(input_string):
+def parse_instructions(input_string):
     x=0 #start at origin
     y=0
     co_ord = deque('NESW')
@@ -12,16 +12,7 @@ def walk(input_string):
     # parse string
     inputs1 = [word.strip() for word in input_string.split(',')] #split on comma, remove whitespace
     
-    #break inputs into single step instructions. (this is for part 2) Eg. L4 -> L1,L1,L1,L1
-    inputs2=''
-    for _ in inputs1:
-        turn, steps = _[0],int(_[1:])
-        new_string=(turn+'1,')*steps
-        inputs2+=new_string
-    
-    #parse string again
-    inputs2 = [word.strip() for word in inputs2.split(',')]
-    for i in inputs2:
+    for i in inputs1:
         turn, steps = i[0],int(i[1:])
 
         #Figure out new orientation
@@ -33,22 +24,31 @@ def walk(input_string):
 
         #Walk steps, update position
         if orientation=='N':
-            y+=steps
+            for _ in xrange(steps):
+                y+=1
+                log_and_check(x,y,log)
         if orientation=='E':
-            x+=steps
+            for _ in xrange(steps):
+                x+=1
+                log_and_check(x,y,log)
         if orientation=='S':
-            y-=steps
+            for _ in xrange(steps):
+                y-=1
+                log_and_check(x,y,log)
         if orientation=='W':
-            x-=steps
+            for _ in xrange(steps):
+                x-=1
+                log_and_check(x,y,log)
 
-        #check if this is the 2nd time we've been at this location
-        if [x,y] in log:
-            return abs(x)+abs(y)
-        else:
-            log.append([x,y])
-            print log
 
-    return 'all locations visited only once'
+def log_and_check(x,y,log):
+    if [x,y] in log:
+        print "(x,y)=({},{})".format(abs(x),abs(y))
+        print 'x+y distance=',abs(x)+abs(y)
+    else:
+        log.append([x,y])
+
+
 
 def main():
     #input
@@ -58,7 +58,7 @@ def main():
     # print walk(inputs)
     # test
     # print walk('L2, L3, L3, L4, R1, R2, L3, R3, R3, L1, L3, R2, R3, L3')
-    print walk('R8, R4, R4, R8')
+    print parse_instructions('R8, R4, R4, R8')
     # print walk(inputs)
 
 if __name__ == "__main__":
