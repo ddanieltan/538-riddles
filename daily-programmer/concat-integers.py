@@ -16,7 +16,8 @@ def permutation(string):
         new_string = removeCharFromString(string, index)
         new_set = permutation(new_string)
         for element in new_set:
-            perm_set.add(char+element)
+            perm_set.add(char+new_set[element]) #THIS IS where the code breaks
+            # perm_set.add(char+"{}".format(element))
     return perm_set
 
 def removeCharFromString(string, index):

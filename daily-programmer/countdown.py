@@ -10,9 +10,11 @@ Instead, the order is determined left to right.
 import sys
 
 def main(inputs):
+    operands = '+-/*'
+
     # break inputs into arguments and final answer
     arguments = inputs[:-1]
-    final_ans = inputs[-1]
+    final_ans = int(inputs[-1])
 
     # create every single possible combination
 
