@@ -32,8 +32,7 @@ def main():
     print 'test'
 
 if __name__ == "__main__":
-    #main()
-    print isprime(7)
-    print test1()
-    print test2()
+    test1()
+    test2()
+    main()
 
