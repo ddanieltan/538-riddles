@@ -33,30 +33,29 @@ def main(user_input):
     HH = int(HH)
     mm = int(mm)
 
-    if HH>=12:
+    if HH>12:
         ampm='pm'
         HH -=12
     else:
         ampm='am'
     hour = num2words.get(HH)
-    ## problem here!
-    try:
-        minute = num2words.get(mm)
-    except KeyError:
-        try:
-            minute = num2words.get(mm/10) + '-' + num2words.get(mm%10)
-        except KeyError:
-            print 'Number not in dictionary'
-
-    # if mm>12:
-    #     first_digit = mm/10
-    #     back_digit = mm%10
-    # else:
-    #     minute = num2words.get(mm)
+    
+    # handling 00-09 min
+    if mm==0:
+        minute=''
+    elif mm<10:
+        minute = 'oh '+num2words.get(mm)
+    else:
+        minute=num2words.get(mm)
+    if minute is None:
+        minute = num2words.get(mm-mm%10)+'-'+num2words.get(mm%10)
 
     #Print output
     output = "It's {} {} {}".format(hour,minute,ampm)
-    print output
+    if HH==0 and mm==0:
+        print 'It\'s midnight'
+    else:
+        print output
 
 if __name__ == "__main__":
     main('00:00')
@@ -64,5 +63,6 @@ if __name__ == "__main__":
     main('12:05')
     main('14:01')
     main('20:29')
+    main('19:37')
     main('21:00')
 
