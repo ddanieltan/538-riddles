@@ -40,12 +40,19 @@ def main(user_input):
         ampm='am'
     hour = num2words.get(HH)
     ## problem here!
-    if mm>12:
-        first_digit = mm/10
-        back_digit = mm%10
-        minute = num2words.get(first_digit) + '-' + num2words.get(back_digit)
-    else:
+    try:
         minute = num2words.get(mm)
+    except KeyError:
+        try:
+            minute = num2words.get(mm/10) + '-' + num2words.get(mm%10)
+        except KeyError:
+            print 'Number not in dictionary'
+
+    # if mm>12:
+    #     first_digit = mm/10
+    #     back_digit = mm%10
+    # else:
+    #     minute = num2words.get(mm)
 
     #Print output
     output = "It's {} {} {}".format(hour,minute,ampm)
