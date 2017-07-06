@@ -39,6 +39,7 @@ def main(user_input):
     else:
         ampm='am'
     hour = num2words.get(HH)
+    ## problem here!
     if mm>12:
         first_digit = mm/10
         back_digit = mm%10
@@ -50,7 +51,11 @@ def main(user_input):
     output = "It's {} {} {}".format(hour,minute,ampm)
     print output
 
-
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main('00:00')
+    main('01:30')
+    main('12:05')
+    main('14:01')
+    main('20:29')
+    main('21:00')
 
