@@ -11,7 +11,7 @@ def get_result(instruction,start_x,start_y):
 
     x,y=start_x,start_y
     
-    for i in instruction[0]:
+    for i in instruction:
         if i=='U' and y>0:
             y-=1
         if i=='D' and y<2:
@@ -27,25 +27,17 @@ def parse_instruction(string):
     #split on new line, strip whitespace
     return [word.split() for word in string.splitlines()]
 
-
-def test1():
-    instructions="""ULL
+def main():
+    input_string="""ULL
     RRDDD
     LURDL
     UUUUD"""
-    instructions = parse_instruction(instructions)
-    for j in range(len(instructions)):
-        #0,1,2,3
-        print j
-    for i in instructions:
-        print get_result(i)
+    instructions=parse_instruction(input_string)
+    output=[]
+    for i in range(len(instructions)):
+        print instructions[i]
 
-    # assert 1985
-
-def main():
-    #test instructions
-    test1()
-
+    print get_result('ULL',1,1)
 
 if __name__ == "__main__":
     main()
