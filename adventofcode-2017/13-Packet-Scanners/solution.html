@@ -11942,7 +11942,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Understanding generators (keyword=yield) https://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do</span>
@@ -11983,7 +11983,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
@@ -12061,10 +12061,34 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Alternative solution using itertools.cycle</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">cycle</span><span class="p">,</span> <span class="n">islice</span>
+
+<span class="c1"># create a generator</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="c1"># print out values</span>
+<span class="c1"># Syntax for Python 2 = itertools.cycle.next()</span>
+<span class="c1"># Syntax for Python 3 = next(itertools.cycle())</span>
+<span class="k">print</span> <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Finding nth element in generator&#39;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span> <span class="c1"># 5 ticks</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">6</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> using islice&#39;</span>
+<span class="c1"># islice(generator, start_index, stop_index)</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -12077,13 +12101,33 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[34]:</div>
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>1
+2
+3
+1
+2
+
+Finding nth element in generator
+1
+
+ using islice
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[46]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>1</pre>
+<pre>2</pre>
 </div>
 
 </div>
@@ -12094,7 +12138,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">move_scanner</span><span class="p">(</span><span class="n">length</span><span class="p">,</span><span class="n">tick</span><span class="p">):</span>
@@ -12102,14 +12146,11 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 <span class="sd">    Return index of Scanner based on how long this layer is (length)</span>
 <span class="sd">    and what tick (picosecond) are we on</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">forwards_list</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">))</span>
-    <span class="n">backwards_list</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">forwards_list</span><span class="p">))</span>
+    <span class="n">forwards</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">))</span>
+    <span class="n">backwards</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">forwards</span><span class="p">))[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">generator</span><span class="o">=</span><span class="n">cycle</span><span class="p">(</span><span class="n">forwards</span><span class="o">+</span><span class="n">backwards</span><span class="p">)</span>
     
-    
-    
-    
-    
-    <span class="k">return</span> <span class="n">tick</span><span class="o">%</span><span class="k">range1</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">generator</span><span class="p">,</span><span class="n">tick</span><span class="p">,</span><span class="n">tick</span><span class="o">+</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -12119,7 +12160,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span> <span class="n">move_scanner</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#Ans should be 0</span>
@@ -12146,8 +12187,8 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 <pre>0
 1
 2
-0
 1
+0
 </pre>
 </div>
 </div>

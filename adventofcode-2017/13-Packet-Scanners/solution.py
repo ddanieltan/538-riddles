@@ -188,7 +188,7 @@
 # figure out how to traverse a list forwards, then backwards based on the tick
 
 
-# In[25]:
+# In[2]:
 
 
 # Understanding generators (keyword=yield) https://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do
@@ -202,7 +202,7 @@ for item in f123():
     print item
 
 
-# In[28]:
+# In[3]:
 
 
 a=list(range(4))
@@ -225,13 +225,37 @@ for x in bounce(range(4)):
     print x
 
 
-# In[34]:
+# In[46]:
 
 
 # Alternative solution using itertools.cycle
+from itertools import cycle, islice
+
+# create a generator
+g = cycle([1,2,3])
+
+# print out values
+# Syntax for Python 2 = itertools.cycle.next()
+# Syntax for Python 3 = next(itertools.cycle())
+print g.next()
+print g.next()
+print g.next()
+print g.next()
+print g.next()
+
+print '\nFinding nth element in generator'
+for i in range(10): # 5 ticks
+    g.next()
+    if i==6:
+        print g.next()
+
+g = cycle([1,2,3])
+print '\n using islice'
+# islice(generator, start_index, stop_index)
+list(islice(g,4,5))[0]
 
 
-# In[9]:
+# In[55]:
 
 
 def move_scanner(length,tick):
@@ -239,17 +263,14 @@ def move_scanner(length,tick):
     Return index of Scanner based on how long this layer is (length)
     and what tick (picosecond) are we on
     """
-    forwards_list=list(range(length))
-    backwards_list=list(reversed(forwards_list))
+    forwards=list(range(length))
+    backwards=list(reversed(forwards))[1:-1]
+    generator=cycle(forwards+backwards)
     
-    
-    
-    
-    
-    return tick%range1
+    return list(islice(generator,tick,tick+1))[0]
 
 
-# In[10]:
+# In[56]:
 
 
 print move_scanner(3,0) #Ans should be 0
