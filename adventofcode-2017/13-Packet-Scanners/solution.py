@@ -182,13 +182,13 @@
 # 
 # Given the details of the firewall you've recorded, if you leave immediately, what is the severity of your whole trip?  
 
-# In[1]:
+# In[47]:
 
 
 # figure out how to traverse a list forwards, then backwards based on the tick
 
 
-# In[2]:
+# In[48]:
 
 
 # Understanding generators (keyword=yield) https://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do
@@ -202,7 +202,7 @@ for item in f123():
     print item
 
 
-# In[3]:
+# In[49]:
 
 
 a=list(range(4))
@@ -211,7 +211,7 @@ print a
 print b
 
 
-# In[32]:
+# In[50]:
 
 
 # Elegant answer that only works in Python3
@@ -225,7 +225,7 @@ for x in bounce(range(4)):
     print x
 
 
-# In[46]:
+# In[51]:
 
 
 # Alternative solution using itertools.cycle
@@ -255,7 +255,7 @@ print '\n using islice'
 list(islice(g,4,5))[0]
 
 
-# In[55]:
+# In[52]:
 
 
 def move_scanner(length,tick):
@@ -270,7 +270,7 @@ def move_scanner(length,tick):
     return list(islice(generator,tick,tick+1))[0]
 
 
-# In[56]:
+# In[53]:
 
 
 print move_scanner(3,0) #Ans should be 0
@@ -280,72 +280,40 @@ print move_scanner(3,3) #Ans should be 1
 print move_scanner(3,4) #Ans should be 0
 
 
-# In[1]:
+# In[54]:
 
 
-def move_scanner(layer):
+# The user/pointer will be at layer n at n ticks.
+for n in range(5):
+    print 'Pointer is at layer {}'.format(n)
+
+
+# In[55]:
+
+
+# Creating the layers
+def create_layers(input_list):
     """
-    Move scanner within a layer on 1 tick
-    Return new layer
+    Inputs: str(layer_id,layer_length), eg. '0: 3'
+    Output: dict{key=layer_id, value=[0,1,2...layer_length]}
     """
+    dict_={}
+    for string in input_list:
+        # Parse string eg. "0: 3"
+        a,b=string.split(': ')
+        layer_id=int(a)
+        layer_length=int(b)
+
+        dict_[layer_id]=range(layer_length)
     
-    output=list(layer)
-    
-    # find current index of scanner and direction
-    index=0
-    direction=''
-    for i in output:
-        if i!=None:
-            index=output.index(i)
-            direction=i
-    
-    #move 1 step forwards or backwards
-    if direction=='f':
-        if index+1==len(layer)-1: # swap f to b if we're at end of list
-            output[index+1]='b'
-        else:
-            output[index+1]=direction
-    elif direction=='b':
-        if index-1==0:
-            output[index-1]='f'
-        else:
-            output[index-1]=direction
+    return dict_
         
-    # remove initial entry
-    output[index]=None
-
-    
-    return output
 
 
-# In[2]:
+# In[56]:
 
 
-move_scanner([None,None,'f',None])
-
-
-# In[4]:
-
-
-move_scanner([None,None,None,'b'])
-
-
-# In[5]:
-
-
-move_scanner([None,None,'b',None])
-
-
-# In[6]:
-
-
-move_scanner([None, 'b', None, None])
-
-
-# In[7]:
-
-
-test_inputs=[
+test=[
     '0: 3',
     '1: 2',
     '4: 4',
@@ -353,59 +321,97 @@ test_inputs=[
 ]
 
 
-# In[10]:
+# In[57]:
 
 
-def parse_inputs(input_list,output={}):
+create_layers(test)
+
+
+# In[68]:
+
+
+def solve(INPUTS):
     """
-    Return a list of layers
-    
-    layer[0]=id
-    layer[1]=[None, None, ..., None]
+    Given a list of inputs, return severity
+    Severity = layer1*id1 + layer2*id2 ...
     """
+
+    d=create_layers(INPUTS)
+    TICKS=range(max(d.keys())+1)
+    severity=0
+
+    for t in TICKS:
+        try:
+            layer=d[t]
+            if move_scanner(len(layer),t)==0:
+                print 'Caught at layer {} depth {}'.format(t,len(layer))
+                severity+=(len(layer)*t)
+
+        except KeyError:
+            pass
     
-    parsed=[i.split(': ') for i in input_list]
-        
-    for p in parsed:
-        
-        id_=int(p[0])
-        initial_list=[None]*int(p[1])
-        initial_list[0]='f'
-        
-        output[id_]=initial_list
-        #output.append([id_,initial_list])
-        
-    return output
-        
+    return severity
 
 
-# In[11]:
+# In[69]:
 
 
-parse_inputs(test_inputs)
+solve(test)
 
 
-# In[17]:
+# In[70]:
 
 
-dictionary=parse_inputs(test_inputs)
+with open('input.txt') as f:
+    INPUTS=[i[:-1] for i in f.readlines()]
+INPUTS[:5]
 
 
-# In[18]:
+# In[71]:
 
 
-parse_inputs(test_inputs).keys()
+# My wrong answer
+solve(INPUTS)
 
 
-# In[20]:
+# In[67]:
 
 
-for i in range(6): #10 ticks
-    for key,value in dictionary.iteritems():
-        if i==key and value[0]=='f':
-            print 'caught'
-        else:
-            dictionary[key]=move_scanner(value)
+# Correct Answer
 
-dictionary
+total = 0
+
+for line in INPUTS:
+    layer, depth = list(map(int, line.split(": ")))
+    try:
+        if layer % ((depth - 1)*2) == 0:
+            print 'Caught at layer {} depth {}'.format(layer,depth)
+            total += layer*depth
+    except ZeroDivisionError:
+        pass
+
+print(total)
+
+
+# In[ ]:
+
+
+# The error was caused by my poor way of parsing the input.txt
+# Layer 88 had a depth of 14, but I captured it as a depth of 1
+# Because i used i[:-1] which did not work for 2-digit depths
+
+
+# In[75]:
+
+
+# Correction
+with open('input.txt') as f:
+    INPUTS=[i.strip('\n') for i in f.readlines()]
+INPUTS[:5]
+
+
+# In[76]:
+
+
+solve(INPUTS)
 

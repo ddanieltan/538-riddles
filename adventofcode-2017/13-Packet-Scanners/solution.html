@@ -11929,7 +11929,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># figure out how to traverse a list forwards, then backwards based on the tick</span>
@@ -11942,7 +11942,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Understanding generators (keyword=yield) https://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do</span>
@@ -11983,7 +11983,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
@@ -12018,7 +12018,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Elegant answer that only works in Python3</span>
@@ -12047,7 +12047,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 
 <div class="output_subarea output_text output_error">
 <pre>
-<span class="ansi-cyan-fg">  File </span><span class="ansi-green-fg">&#34;&lt;ipython-input-32-5a2875aeecb0&gt;&#34;</span><span class="ansi-cyan-fg">, line </span><span class="ansi-green-fg">2</span>
+<span class="ansi-cyan-fg">  File </span><span class="ansi-green-fg">&#34;&lt;ipython-input-50-e8c993d2576d&gt;&#34;</span><span class="ansi-cyan-fg">, line </span><span class="ansi-green-fg">5</span>
 <span class="ansi-red-fg">    yield from list1</span>
              ^
 <span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> invalid syntax
@@ -12061,7 +12061,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Alternative solution using itertools.cycle</span>
@@ -12121,7 +12121,7 @@ Finding nth element in generator
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[46]:</div>
+<div class="prompt output_prompt">Out[51]:</div>
 
 
 
@@ -12138,7 +12138,7 @@ Finding nth element in generator
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">move_scanner</span><span class="p">(</span><span class="n">length</span><span class="p">,</span><span class="n">tick</span><span class="p">):</span>
@@ -12160,7 +12160,7 @@ Finding nth element in generator
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span> <span class="n">move_scanner</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#Ans should be 0</span>
@@ -12199,42 +12199,63 @@ Finding nth element in generator
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[54]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">move_scanner</span><span class="p">(</span><span class="n">layer</span><span class="p">):</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># The user/pointer will be at layer n at n ticks.</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s1">&#39;Pointer is at layer {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Pointer is at layer 0
+Pointer is at layer 1
+Pointer is at layer 2
+Pointer is at layer 3
+Pointer is at layer 4
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Creating the layers</span>
+<span class="k">def</span> <span class="nf">create_layers</span><span class="p">(</span><span class="n">input_list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Move scanner within a layer on 1 tick</span>
-<span class="sd">    Return new layer</span>
+<span class="sd">    Inputs: str(layer_id,layer_length), eg. &#39;0: 3&#39;</span>
+<span class="sd">    Output: dict{key=layer_id, value=[0,1,2...layer_length]}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dict_</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">input_list</span><span class="p">:</span>
+        <span class="c1"># Parse string eg. &quot;0: 3&quot;</span>
+        <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;: &#39;</span><span class="p">)</span>
+        <span class="n">layer_id</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">layer_length</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+        <span class="n">dict_</span><span class="p">[</span><span class="n">layer_id</span><span class="p">]</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">layer_length</span><span class="p">)</span>
     
-    <span class="n">output</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
-    
-    <span class="c1"># find current index of scanner and direction</span>
-    <span class="n">index</span><span class="o">=</span><span class="mi">0</span>
-    <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">i</span><span class="o">!=</span><span class="bp">None</span><span class="p">:</span>
-            <span class="n">index</span><span class="o">=</span><span class="n">output</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-            <span class="n">direction</span><span class="o">=</span><span class="n">i</span>
-    
-    <span class="c1">#move 1 step forwards or backwards</span>
-    <span class="k">if</span> <span class="n">direction</span><span class="o">==</span><span class="s1">&#39;f&#39;</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="c1"># swap f to b if we&#39;re at end of list</span>
-            <span class="n">output</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;b&#39;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">output</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">direction</span>
-    <span class="k">elif</span> <span class="n">direction</span><span class="o">==</span><span class="s1">&#39;b&#39;</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-            <span class="n">output</span><span class="p">[</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;f&#39;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">output</span><span class="p">[</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">direction</span>
+    <span class="k">return</span> <span class="n">dict_</span>
         
-    <span class="c1"># remove initial entry</span>
-    <span class="n">output</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
-
-    
-    <span class="k">return</span> <span class="n">output</span>
 </pre></div>
 
 </div>
@@ -12244,142 +12265,10 @@ Finding nth element in generator
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">move_scanner</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="bp">None</span><span class="p">])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[2]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[None, None, None, &#39;b&#39;]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">move_scanner</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[4]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[None, None, &#39;b&#39;, None]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">move_scanner</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="bp">None</span><span class="p">])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[5]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[None, &#39;b&#39;, None, None]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">move_scanner</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[6]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[&#39;f&#39;, None, None, None]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">test_inputs</span><span class="o">=</span><span class="p">[</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">test</span><span class="o">=</span><span class="p">[</span>
     <span class="s1">&#39;0: 3&#39;</span><span class="p">,</span>
     <span class="s1">&#39;1: 2&#39;</span><span class="p">,</span>
     <span class="s1">&#39;4: 4&#39;</span><span class="p">,</span>
@@ -12394,30 +12283,63 @@ Finding nth element in generator
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">parse_inputs</span><span class="p">(</span><span class="n">input_list</span><span class="p">,</span><span class="n">output</span><span class="o">=</span><span class="p">{}):</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">create_layers</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[57]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{0: [0, 1, 2], 1: [0, 1], 4: [0, 1, 2, 3], 6: [0, 1, 2, 3]}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">INPUTS</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return a list of layers</span>
-<span class="sd">    </span>
-<span class="sd">    layer[0]=id</span>
-<span class="sd">    layer[1]=[None, None, ..., None]</span>
+<span class="sd">    Given a list of inputs, return severity</span>
+<span class="sd">    Severity = layer1*id1 + layer2*id2 ...</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">d</span><span class="o">=</span><span class="n">create_layers</span><span class="p">(</span><span class="n">INPUTS</span><span class="p">)</span>
+    <span class="n">TICKS</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">severity</span><span class="o">=</span><span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TICKS</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">layer</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">move_scanner</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layer</span><span class="p">),</span><span class="n">t</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s1">&#39;Caught at layer {} depth {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">layer</span><span class="p">))</span>
+                <span class="n">severity</span><span class="o">+=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
     
-    <span class="n">parsed</span><span class="o">=</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;: &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">input_list</span><span class="p">]</span>
-        
-    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parsed</span><span class="p">:</span>
-        
-        <span class="n">id_</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">initial_list</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">initial_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;f&#39;</span>
-        
-        <span class="n">output</span><span class="p">[</span><span class="n">id_</span><span class="p">]</span><span class="o">=</span><span class="n">initial_list</span>
-        <span class="c1">#output.append([id_,initial_list])</span>
-        
-    <span class="k">return</span> <span class="n">output</span>
-        
+    <span class="k">return</span> <span class="n">severity</span>
 </pre></div>
 
 </div>
@@ -12427,10 +12349,10 @@ Finding nth element in generator
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[69]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">parse_inputs</span><span class="p">(</span><span class="n">test_inputs</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">solve</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12443,16 +12365,25 @@ Finding nth element in generator
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[11]:</div>
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Caught at layer 0 depth 3
+Caught at layer 6 depth 4
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[69]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{0: [&#39;f&#39;, None, None],
- 1: [&#39;f&#39;, None],
- 4: [&#39;f&#39;, None, None, None],
- 6: [&#39;f&#39;, None, None, None]}</pre>
+<pre>24</pre>
 </div>
 
 </div>
@@ -12463,23 +12394,12 @@ Finding nth element in generator
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">dictionary</span><span class="o">=</span><span class="n">parse_inputs</span><span class="p">(</span><span class="n">test_inputs</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">parse_inputs</span><span class="p">(</span><span class="n">test_inputs</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">INPUTS</span><span class="o">=</span><span class="p">[</span><span class="n">i</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
+<span class="n">INPUTS</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -12492,13 +12412,13 @@ Finding nth element in generator
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[18]:</div>
+<div class="prompt output_prompt">Out[70]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[0, 1, 4, 6]</pre>
+<pre>[&#39;0: 4&#39;, &#39;1: 2&#39;, &#39;2: 3&#39;, &#39;4: 4&#39;, &#39;6: 8&#39;]</pre>
 </div>
 
 </div>
@@ -12509,17 +12429,11 @@ Finding nth element in generator
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span> <span class="c1">#10 ticks</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="n">key</span> <span class="ow">and</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;f&#39;</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s1">&#39;caught&#39;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">move_scanner</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-
-<span class="n">dictionary</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># My wrong answer</span>
+<span class="n">solve</span><span class="p">(</span><span class="n">INPUTS</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12532,16 +12446,177 @@ Finding nth element in generator
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[20]:</div>
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Caught at layer 0 depth 4
+Caught at layer 8 depth 5
+Caught at layer 20 depth 6
+Caught at layer 22 depth 12
+Caught at layer 28 depth 8
+Caught at layer 88 depth 1
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[71]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{0: [&#39;f&#39;, None, None],
- 1: [&#39;f&#39;, None],
- 4: [&#39;f&#39;, None, None, None],
- 6: [&#39;f&#39;, None, None, None]}</pre>
+<pre>736</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Correct Answer</span>
+
+<span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">INPUTS</span><span class="p">:</span>
+    <span class="n">layer</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;: &quot;</span><span class="p">)))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">layer</span> <span class="o">%</span> <span class="p">((</span><span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s1">&#39;Caught at layer {} depth {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span><span class="n">depth</span><span class="p">)</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">layer</span><span class="o">*</span><span class="n">depth</span>
+    <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Caught at layer 0 depth 4
+Caught at layer 8 depth 5
+Caught at layer 20 depth 6
+Caught at layer 22 depth 12
+Caught at layer 28 depth 8
+648
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># The error was caused by my poor way of parsing the input.txt</span>
+<span class="c1"># Layer 88 had a depth of 14, but I captured it as a depth of 1</span>
+<span class="c1"># Because i used i[:-1] which did not work for 2-digit depths</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Correction</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">INPUTS</span><span class="o">=</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
+<span class="n">INPUTS</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[75]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;0: 4&#39;, &#39;1: 2&#39;, &#39;2: 3&#39;, &#39;4: 4&#39;, &#39;6: 8&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[76]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">solve</span><span class="p">(</span><span class="n">INPUTS</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Caught at layer 0 depth 4
+Caught at layer 8 depth 5
+Caught at layer 20 depth 6
+Caught at layer 22 depth 12
+Caught at layer 28 depth 8
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[76]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>648</pre>
 </div>
 
 </div>
