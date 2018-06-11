@@ -12265,7 +12265,7 @@ Pointer is at layer 4
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="prompt input_prompt">In&nbsp;[88]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">test</span><span class="o">=</span><span class="p">[</span>
@@ -12621,6 +12621,248 @@ Caught at layer 28 depth 8
 
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>--- Part Two ---</p>
+<p>Now, you need to pass through the firewall without being caught - easier said than done.</p>
+<p>You can't control the speed of the packet, but you can delay it any number of picoseconds.</p>
+<p>For each picosecond you delay the packet before beginning your trip, all security scanners move one step.</p>
+<p>You're not in the firewall during this time; you don't enter layer 0 until you stop delaying the packet.</p>
+<p>In the example above, if you delay 10 picoseconds (picoseconds 0 - 9), you won't get caught:</p>
+<p>Because all smaller delays would get you caught, the fewest number of picoseconds you would need to delay to get through safely is 10.</p>
+<p>What is the fewest number of picoseconds that you need to delay the packet to pass through the firewall without being caught?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[110]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">solve2</span><span class="p">(</span><span class="n">INPUTS</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a list of inputs, return the delay to not get caught by the scanner</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">create_layers</span><span class="p">(</span><span class="n">INPUTS</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">delay</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+        <span class="n">TICKS</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">delay</span><span class="p">)[</span><span class="n">delay</span><span class="p">:]</span>
+        <span class="n">caught</span><span class="o">=</span><span class="mi">0</span>
+        
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TICKS</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">layer</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="n">delay</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">move_scanner</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layer</span><span class="p">),</span><span class="n">t</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="c1">#print &#39;Delay={} Caught at layer {} depth {}&#39;.format(delay,t,len(layer))</span>
+                    <span class="n">caught</span><span class="o">+=</span><span class="mi">1</span>
+
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+        
+        <span class="c1">#print caught</span>
+        <span class="k">if</span> <span class="n">caught</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">delay</span>
+        
+    
+    <span class="k">return</span> <span class="mi">9999</span> <span class="c1">#no answer found</span>
+    
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[111]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Demo of counter</span>
+<span class="k">for</span> <span class="n">delay</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+    <span class="k">print</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">delay</span><span class="p">)[</span><span class="n">delay</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="n">delay</span><span class="o">==</span><span class="mi">5</span><span class="p">:</span>
+        <span class="k">break</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[0, 1, 2, 3, 4, 5, 6]
+[1, 2, 3, 4, 5, 6, 7]
+[2, 3, 4, 5, 6, 7, 8]
+[3, 4, 5, 6, 7, 8, 9]
+[4, 5, 6, 7, 8, 9, 10]
+[5, 6, 7, 8, 9, 10, 11]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[112]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">solve2</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[112]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>10</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[113]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">solve2</span><span class="p">(</span><span class="n">INPUTS</span><span class="p">)</span>
+
+<span class="c1"># I believe the solution here is correct but it runs WAY too slow because I&#39;m looping through every step. </span>
+<span class="c1"># The final ans is in the millions. So this is a terribly inefficient way to find the answer.</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-113-8239ef474ffe&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>solve2<span class="ansi-blue-fg">(</span>INPUTS<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-110-9234ba9c5442&gt;</span> in <span class="ansi-cyan-fg">solve2</span><span class="ansi-blue-fg">(INPUTS)</span>
+<span class="ansi-green-intense-fg ansi-bold">      6</span> 
+<span class="ansi-green-intense-fg ansi-bold">      7</span>     <span class="ansi-green-fg">for</span> delay <span class="ansi-green-fg">in</span> itertools<span class="ansi-blue-fg">.</span>count<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">----&gt; 8</span><span class="ansi-red-fg">         </span>TICKS<span class="ansi-blue-fg">=</span>range<span class="ansi-blue-fg">(</span>max<span class="ansi-blue-fg">(</span>d<span class="ansi-blue-fg">.</span>keys<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">+</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">+</span>delay<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span>delay<span class="ansi-blue-fg">:</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">      9</span>         caught<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0</span>
+<span class="ansi-green-intense-fg ansi-bold">     10</span> 
+
+<span class="ansi-red-fg">KeyboardInterrupt</span>: </pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[117]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-117-633e5fc6e9c1&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-green-fg">with</span> open<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;input.txt&#39;</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">as</span> f<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">print</span> <span class="ansi-blue-fg">[</span>i <span class="ansi-green-fg">for</span> i <span class="ansi-green-fg">in</span> f<span class="ansi-blue-fg">.</span>readlines<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>strip<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;\n&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span>
+
+<span class="ansi-red-fg">AttributeError</span>: &#39;list&#39; object has no attribute &#39;strip&#39;</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">INPUT2</span> <span class="o">=</span> <span class="p">[(</span><span class="n">d</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">r</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">*</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">,&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;{}&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+    <span class="n">part1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">d</span><span class="o">*</span><span class="n">r</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">R</span> <span class="ow">in</span> <span class="n">S</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">d</span><span class="o">%</span><span class="k">R</span>)
+    <span class="n">part2</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">c</span><span class="p">()</span> <span class="k">if</span> <span class="nb">all</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="n">d</span><span class="p">)</span><span class="o">%</span><span class="k">R</span> for d, _, R in S))
+    <span class="k">return</span> <span class="n">part1</span><span class="p">,</span> <span class="n">part2</span>
+
+<span class="n">solve</span><span class="p">(</span><span class="s1">&#39;0: 3</span><span class="se">\n</span><span class="s1">1: 2</span><span class="se">\n</span><span class="s1">4: 4</span><span class="se">\n</span><span class="s1">6: 4</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
 </div>
 </div>
 

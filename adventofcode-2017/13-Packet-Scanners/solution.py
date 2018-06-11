@@ -310,7 +310,7 @@ def create_layers(input_list):
         
 
 
-# In[56]:
+# In[88]:
 
 
 test=[
@@ -414,4 +414,102 @@ INPUTS[:5]
 
 
 solve(INPUTS)
+
+
+# --- Part Two ---
+# 
+# Now, you need to pass through the firewall without being caught - easier said than done.
+# 
+# You can't control the speed of the packet, but you can delay it any number of picoseconds.
+# 
+# For each picosecond you delay the packet before beginning your trip, all security scanners move one step.
+# 
+# You're not in the firewall during this time; you don't enter layer 0 until you stop delaying the packet.
+# 
+# 
+# In the example above, if you delay 10 picoseconds (picoseconds 0 - 9), you won't get caught:
+# 
+# Because all smaller delays would get you caught, the fewest number of picoseconds you would need to delay to get through safely is 10.
+# 
+# What is the fewest number of picoseconds that you need to delay the packet to pass through the firewall without being caught?
+# 
+
+# In[77]:
+
+
+import itertools
+
+
+# In[110]:
+
+
+def solve2(INPUTS):
+    """
+    Given a list of inputs, return the delay to not get caught by the scanner
+    """
+    d=create_layers(INPUTS)
+
+    for delay in itertools.count():
+        TICKS=range(max(d.keys())+1+delay)[delay:]
+        caught=0
+        
+        for t in TICKS:
+            try:
+                layer=d[t-delay]
+                if move_scanner(len(layer),t)==0:
+                    #print 'Delay={} Caught at layer {} depth {}'.format(delay,t,len(layer))
+                    caught+=1
+
+            except KeyError:
+                pass
+        
+        #print caught
+        if caught==0:
+            return delay
+        
+    
+    return 9999 #no answer found
+    
+
+
+# In[111]:
+
+
+# Demo of counter
+for delay in itertools.count():
+    print range(6+1+delay)[delay:]
+    if delay==5:
+        break
+
+
+# In[112]:
+
+
+solve2(test)
+
+
+# In[113]:
+
+
+solve2(INPUTS)
+
+# I believe the solution here is correct but it runs WAY too slow because I'm looping through every step. 
+# The final ans is in the millions. So this is a terribly inefficient way to find the answer.
+
+
+# In[117]:
+
+
+
+
+
+# In[ ]:
+
+
+INPUT2 = [(d, r, 2*r-2) for d, r in eval(input.strip().replace(*'\n,').join('{}')).items()]
+    part1 = sum(d*r for d, r, R in S if not d%R)
+    part2 = next(i for i in c() if all((i+d)%R for d, _, R in S))
+    return part1, part2
+
+solve('0: 3\n1: 2\n4: 4\n6: 4\n')
 
