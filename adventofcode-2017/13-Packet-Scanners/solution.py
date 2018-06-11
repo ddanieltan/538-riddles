@@ -11,167 +11,6 @@
 # Each layer has a thickness of exactly 1.  
 # A layer at depth 0 begins immediately inside the firewall; a layer at depth 1 would start immediately after that.  
 # 
-# For example, suppose you've recorded the following:  
-# 
-# 0: 3  
-# 1: 2  
-# 4: 4  
-# 6: 4  
-# This means that there is a layer immediately inside the firewall (with range 3),  
-# a second layer immediately after that (with range 2), a third layer which begins at depth 4 (with range 4),  
-# and a fourth layer which begins at depth 6 (also with range 4). Visually, it might look like this:  
-# 
-#  0   1   2   3   4   5   6  
-# [ ] [ ] ... ... [ ] ... [ ]  
-# [ ] [ ]         [ ]     [ ]  
-# [ ]             [ ]     [ ]  
-#                 [ ]     [ ]  
-# Within each layer, a security scanner moves back and forth within its range.  
-# Each security scanner starts at the top and moves down until it reaches the bottom,  
-# then moves up until it reaches the top, and repeats.  
-# A security scanner takes one picosecond to move one step. Drawing scanners as S,  
-# the first few picoseconds look like this:  
-# 
-# 
-# Picosecond 0:  
-#  0   1   2   3   4   5   6  
-# [S] [S] ... ... [S] ... [S]  
-# [ ] [ ]         [ ]     [ ]  
-# [ ]             [ ]     [ ]  
-#                 [ ]     [ ]  
-# 
-# Picosecond 1:  
-#  0   1   2   3   4   5   6  
-# [ ] [ ] ... ... [ ] ... [ ]  
-# [S] [S]         [S]     [S]  
-# [ ]             [ ]     [ ]  
-#                 [ ]     [ ]  
-# 
-# Picosecond 2:  
-#  0   1   2   3   4   5   6  
-# [ ] [S] ... ... [ ] ... [ ]  
-# [ ] [ ]         [ ]     [ ]  
-# [S]             [S]     [S]  
-#                 [ ]     [ ]  
-# 
-# Picosecond 3:  
-#  0   1   2   3   4   5   6  
-# [ ] [ ] ... ... [ ] ... [ ]  
-# [S] [S]         [ ]     [ ]  
-# [ ]             [ ]     [ ]  
-#                 [S]     [S]  
-# Your plan is to hitch a ride on a packet about to move through the firewall.  
-# The packet will travel along the top of each layer, and it moves at one layer per picosecond.  
-# Each picosecond, the packet moves one layer forward (its first move takes it into layer 0),  
-# and then the scanners move one step.  
-# If there is a scanner at the top of the layer as your packet enters it, you are caught.  
-# (If a scanner moves into the top of its layer while you are there, you are not caught:  
-# it doesn't have time to notice you before you leave.) If you were to do this in the configuration above,  
-# marking your current position with parentheses, your passage through the firewall would look like this:  
-# 
-# Initial state:  
-#  0   1   2   3   4   5   6  
-# [S] [S] ... ... [S] ... [S]  
-# [ ] [ ]         [ ]     [ ]  
-# [ ]             [ ]     [ ]  
-#                 [ ]     [ ]  
-# 
-# Picosecond 0:  
-#  0   1   2   3   4   5   6  
-# (S) [S] ... ... [S] ... [S]  
-# [ ] [ ]         [ ]     [ ]  
-# [ ]             [ ]     [ ]  
-#                 [ ]     [ ]  
-# 
-#  0   1   2   3   4   5   6  
-# ( ) [ ] ... ... [ ] ... [ ]  
-# [S] [S]         [S]     [S]  
-# [ ]             [ ]     [ ]  
-#                 [ ]     [ ]  
-# 
-# 
-# Picosecond 1:  
-#  0   1   2   3   4   5   6  
-# [ ] ( ) ... ... [ ] ... [ ]  
-# [S] [S]         [S]     [S]  
-# [ ]             [ ]     [ ]  
-#                 [ ]     [ ]  
-# 
-#  0   1   2   3   4   5   6  
-# [ ] (S) ... ... [ ] ... [ ]  
-# [ ] [ ]         [ ]     [ ]  
-# [S]             [S]     [S]  
-#                 [ ]     [ ]  
-# 
-# 
-# Picosecond 2:  
-#  0   1   2   3   4   5   6  
-# [ ] [S] (.) ... [ ] ... [ ]  
-# [ ] [ ]         [ ]     [ ]  
-# [S]             [S]     [S]  
-#                 [ ]     [ ]  
-# 
-#  0   1   2   3   4   5   6  
-# [ ] [ ] (.) ... [ ] ... [ ]  
-# [S] [S]         [ ]     [ ]  
-# [ ]             [ ]     [ ]  
-#                 [S]     [S]  
-# 
-# 
-# Picosecond 3:  
-#  0   1   2   3   4   5   6  
-# [ ] [ ] ... (.) [ ] ... [ ]  
-# [S] [S]         [ ]     [ ]  
-# [ ]             [ ]     [ ]  
-#                 [S]     [S]  
-# 
-#  0   1   2   3   4   5   6  
-# [S] [S] ... (.) [ ] ... [ ]  
-# [ ] [ ]         [ ]     [ ]  
-# [ ]             [S]     [S]  
-#                 [ ]     [ ]  
-# 
-# 
-# Picosecond 4:  
-#  0   1   2   3   4   5   6  
-# [S] [S] ... ... ( ) ... [ ]  
-# [ ] [ ]         [ ]     [ ]  
-# [ ]             [S]     [S]  
-#                 [ ]     [ ]  
-# 
-#  0   1   2   3   4   5   6  
-# [ ] [ ] ... ... ( ) ... [ ]  
-# [S] [S]         [S]     [S]  
-# [ ]             [ ]     [ ]  
-#                 [ ]     [ ]  
-# 
-# 
-# Picosecond 5:  
-#  0   1   2   3   4   5   6  
-# [ ] [ ] ... ... [ ] (.) [ ]  
-# [S] [S]         [S]     [S]  
-# [ ]             [ ]     [ ]  
-#                 [ ]     [ ]  
-# 
-#  0   1   2   3   4   5   6  
-# [ ] [S] ... ... [S] (.) [S]  
-# [ ] [ ]         [ ]     [ ]  
-# [S]             [ ]     [ ]  
-#                 [ ]     [ ]  
-# 
-# 
-# Picosecond 6:  
-#  0   1   2   3   4   5   6  
-# [ ] [S] ... ... [S] ... (S)  
-# [ ] [ ]         [ ]     [ ]  
-# [S]             [ ]     [ ]  
-#                 [ ]     [ ]  
-# 
-#  0   1   2   3   4   5   6  
-# [ ] [ ] ... ... [ ] ... ( )  
-# [S] [S]         [S]     [S]  
-# [ ]             [ ]     [ ]  
-#                 [ ]     [ ]  
 # In this situation, you are caught in layers 0 and 6,  
 # because your packet entered the layer when its scanner was at the top when you entered it.  
 # You are not caught in layer 1, since the scanner moved into the top of the layer once you were already there.  
@@ -182,13 +21,13 @@
 # 
 # Given the details of the firewall you've recorded, if you leave immediately, what is the severity of your whole trip?  
 
-# In[47]:
+# In[14]:
 
 
 # figure out how to traverse a list forwards, then backwards based on the tick
 
 
-# In[48]:
+# In[15]:
 
 
 # Understanding generators (keyword=yield) https://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do
@@ -202,7 +41,7 @@ for item in f123():
     print item
 
 
-# In[49]:
+# In[16]:
 
 
 a=list(range(4))
@@ -211,7 +50,7 @@ print a
 print b
 
 
-# In[50]:
+# In[ ]:
 
 
 # Elegant answer that only works in Python3
@@ -225,7 +64,7 @@ for x in bounce(range(4)):
     print x
 
 
-# In[51]:
+# In[18]:
 
 
 # Alternative solution using itertools.cycle
@@ -255,7 +94,7 @@ print '\n using islice'
 list(islice(g,4,5))[0]
 
 
-# In[52]:
+# In[19]:
 
 
 def move_scanner(length,tick):
@@ -270,7 +109,14 @@ def move_scanner(length,tick):
     return list(islice(generator,tick,tick+1))[0]
 
 
-# In[53]:
+# In[ ]:
+
+
+# Alternative way of finding index of the scanner, 
+# sum(d*r for d,r,R in S if not d%R) # R= 2*range-2, d%R gives position of scanner
+
+
+# In[20]:
 
 
 print move_scanner(3,0) #Ans should be 0
@@ -280,7 +126,7 @@ print move_scanner(3,3) #Ans should be 1
 print move_scanner(3,4) #Ans should be 0
 
 
-# In[54]:
+# In[21]:
 
 
 # The user/pointer will be at layer n at n ticks.
@@ -288,7 +134,7 @@ for n in range(5):
     print 'Pointer is at layer {}'.format(n)
 
 
-# In[55]:
+# In[22]:
 
 
 # Creating the layers
@@ -310,7 +156,7 @@ def create_layers(input_list):
         
 
 
-# In[88]:
+# In[23]:
 
 
 test=[
@@ -321,13 +167,13 @@ test=[
 ]
 
 
-# In[57]:
+# In[24]:
 
 
 create_layers(test)
 
 
-# In[68]:
+# In[25]:
 
 
 def solve(INPUTS):
@@ -353,13 +199,13 @@ def solve(INPUTS):
     return severity
 
 
-# In[69]:
+# In[26]:
 
 
 solve(test)
 
 
-# In[70]:
+# In[27]:
 
 
 with open('input.txt') as f:
@@ -367,14 +213,14 @@ with open('input.txt') as f:
 INPUTS[:5]
 
 
-# In[71]:
+# In[28]:
 
 
 # My wrong answer
 solve(INPUTS)
 
 
-# In[67]:
+# In[29]:
 
 
 # Correct Answer
@@ -393,7 +239,7 @@ for line in INPUTS:
 print(total)
 
 
-# In[ ]:
+# In[30]:
 
 
 # The error was caused by my poor way of parsing the input.txt
@@ -401,7 +247,7 @@ print(total)
 # Because i used i[:-1] which did not work for 2-digit depths
 
 
-# In[75]:
+# In[31]:
 
 
 # Correction
@@ -410,7 +256,7 @@ with open('input.txt') as f:
 INPUTS[:5]
 
 
-# In[76]:
+# In[32]:
 
 
 solve(INPUTS)
@@ -434,13 +280,13 @@ solve(INPUTS)
 # What is the fewest number of picoseconds that you need to delay the packet to pass through the firewall without being caught?
 # 
 
-# In[77]:
+# In[33]:
 
 
 import itertools
 
 
-# In[110]:
+# In[34]:
 
 
 def solve2(INPUTS):
@@ -472,7 +318,7 @@ def solve2(INPUTS):
     
 
 
-# In[111]:
+# In[35]:
 
 
 # Demo of counter
@@ -482,13 +328,13 @@ for delay in itertools.count():
         break
 
 
-# In[112]:
+# In[36]:
 
 
 solve2(test)
 
 
-# In[113]:
+# In[ ]:
 
 
 solve2(INPUTS)
@@ -497,19 +343,90 @@ solve2(INPUTS)
 # The final ans is in the millions. So this is a terribly inefficient way to find the answer.
 
 
-# In[117]:
+# In[56]:
 
 
+# Creating the layers
+def create_layers2(input_list):
+    """
+    Inputs: str(layer_id,layer_length), eg. '0: 3'
+    Output: dict{key=layer_id, values=[0,1,2...layer_length],2*range-2 }
+    """
+    list_=[]
+    for string in input_list:
+        # Parse string eg. "0: 3"
+        a,b=string.split(': ')
+        layer_id=int(a)
+        layer_length=int(b)
 
+        list_.append((layer_id,layer_length,2*layer_length-2))
+    
+    return list_
+        
+
+
+# In[57]:
+
+
+M=create_layers2(test)
+M
+
+
+# In[58]:
+
+
+S=create_layers2(INPUTS)
+
+
+# In[81]:
+
+
+# Correct answer online for Part 2
+(i for i in itertools.count() if all((i+d)%R for d,r,R in S)).next()
 
 
 # In[ ]:
 
 
-INPUT2 = [(d, r, 2*r-2) for d, r in eval(input.strip().replace(*'\n,').join('{}')).items()]
-    part1 = sum(d*r for d, r, R in S if not d%R)
-    part2 = next(i for i in c() if all((i+d)%R for d, _, R in S))
-    return part1, part2
+## Breaking it down
+next                          #python3 syntax, python2 is .next()
+(i for i in itertools.count() # generator that produces 0,1,2,3...
+ if 
+ all(                         # returns True only if all inner conditions are True
+     (i+d)%R for d,r,R in S   # formula outputting index
+ )
+)
 
-solve('0: 3\n1: 2\n4: 4\n6: 4\n')
+
+# In[ ]:
+
+
+# every i in the list comprehension needs to be a non-None value before all(...) returns True
+all(i for i in [1,2,3,4,5])
+
+
+# In[85]:
+
+
+all(i for i in [1,2,3,4,5,None])
+
+
+# In[ ]:
+
+
+## Better worded but same model answer solution
+
+lines = [line.split(': ') for line in sys.stdin.readlines()]
+
+heights = {int(pos): int(height) for pos, height in lines}
+
+def scanner(height, time):
+    offset = time % ((height - 1) * 2)
+
+    return 2 * (height - 1) - offset if offset > height - 1 else offset
+
+part1 = sum(pos * heights[pos] for pos in heights if scanner(heights[pos], pos) == 0)
+
+part2 = next(wait for wait in itertools.count() if not any(scanner(heights[pos], wait + pos) == 0 for pos in heights))
+permalinkembedsavegive gold
 

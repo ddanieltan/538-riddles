@@ -11783,140 +11783,7 @@ To succeed, you must not be detected by a scanner.</p>
 and the range of the scanning area for the scanner within it, written as depth: range.<br>
 Each layer has a thickness of exactly 1.<br>
 A layer at depth 0 begins immediately inside the firewall; a layer at depth 1 would start immediately after that.</p>
-<p>For example, suppose you've recorded the following:</p>
-<p>0: 3<br>
-1: 2<br>
-4: 4<br>
-6: 4<br>
-This means that there is a layer immediately inside the firewall (with range 3),<br>
-a second layer immediately after that (with range 2), a third layer which begins at depth 4 (with range 4),<br>
-and a fourth layer which begins at depth 6 (also with range 4). Visually, it might look like this:</p>
-<p>0   1   2   3   4   5   6<br>
-[ ] [ ] ... ... [ ] ... [ ]<br>
-[ ] [ ]         [ ]     [ ]<br>
-[ ]             [ ]     [ ]<br>
-                [ ]     [ ]<br>
-Within each layer, a security scanner moves back and forth within its range.<br>
-Each security scanner starts at the top and moves down until it reaches the bottom,<br>
-then moves up until it reaches the top, and repeats.<br>
-A security scanner takes one picosecond to move one step. Drawing scanners as S,<br>
-the first few picoseconds look like this:</p>
-<p>Picosecond 0:<br>
- 0   1   2   3   4   5   6<br>
-[S] [S] ... ... [S] ... [S]<br>
-[ ] [ ]         [ ]     [ ]<br>
-[ ]             [ ]     [ ]<br>
-                [ ]     [ ]</p>
-<p>Picosecond 1:<br>
- 0   1   2   3   4   5   6<br>
-[ ] [ ] ... ... [ ] ... [ ]<br>
-[S] [S]         [S]     [S]<br>
-[ ]             [ ]     [ ]<br>
-                [ ]     [ ]</p>
-<p>Picosecond 2:<br>
- 0   1   2   3   4   5   6<br>
-[ ] [S] ... ... [ ] ... [ ]<br>
-[ ] [ ]         [ ]     [ ]<br>
-[S]             [S]     [S]<br>
-                [ ]     [ ]</p>
-<p>Picosecond 3:<br>
- 0   1   2   3   4   5   6<br>
-[ ] [ ] ... ... [ ] ... [ ]<br>
-[S] [S]         [ ]     [ ]<br>
-[ ]             [ ]     [ ]<br>
-                [S]     [S]<br>
-Your plan is to hitch a ride on a packet about to move through the firewall.<br>
-The packet will travel along the top of each layer, and it moves at one layer per picosecond.<br>
-Each picosecond, the packet moves one layer forward (its first move takes it into layer 0),<br>
-and then the scanners move one step.<br>
-If there is a scanner at the top of the layer as your packet enters it, you are caught.<br>
-(If a scanner moves into the top of its layer while you are there, you are not caught:<br>
-it doesn't have time to notice you before you leave.) If you were to do this in the configuration above,<br>
-marking your current position with parentheses, your passage through the firewall would look like this:</p>
-<p>Initial state:<br>
- 0   1   2   3   4   5   6<br>
-[S] [S] ... ... [S] ... [S]<br>
-[ ] [ ]         [ ]     [ ]<br>
-[ ]             [ ]     [ ]<br>
-                [ ]     [ ]</p>
-<p>Picosecond 0:<br>
- 0   1   2   3   4   5   6<br>
-(S) [S] ... ... [S] ... [S]<br>
-[ ] [ ]         [ ]     [ ]<br>
-[ ]             [ ]     [ ]<br>
-                [ ]     [ ]</p>
-<p>0   1   2   3   4   5   6<br>
-( ) [ ] ... ... [ ] ... [ ]<br>
-[S] [S]         [S]     [S]<br>
-[ ]             [ ]     [ ]<br>
-                [ ]     [ ]</p>
-<p>Picosecond 1:<br>
- 0   1   2   3   4   5   6<br>
-[ ] ( ) ... ... [ ] ... [ ]<br>
-[S] [S]         [S]     [S]<br>
-[ ]             [ ]     [ ]<br>
-                [ ]     [ ]</p>
-<p>0   1   2   3   4   5   6<br>
-[ ] (S) ... ... [ ] ... [ ]<br>
-[ ] [ ]         [ ]     [ ]<br>
-[S]             [S]     [S]<br>
-                [ ]     [ ]</p>
-<p>Picosecond 2:<br>
- 0   1   2   3   4   5   6<br>
-[ ] [S] (.) ... [ ] ... [ ]<br>
-[ ] [ ]         [ ]     [ ]<br>
-[S]             [S]     [S]<br>
-                [ ]     [ ]</p>
-<p>0   1   2   3   4   5   6<br>
-[ ] [ ] (.) ... [ ] ... [ ]<br>
-[S] [S]         [ ]     [ ]<br>
-[ ]             [ ]     [ ]<br>
-                [S]     [S]</p>
-<p>Picosecond 3:<br>
- 0   1   2   3   4   5   6<br>
-[ ] [ ] ... (.) [ ] ... [ ]<br>
-[S] [S]         [ ]     [ ]<br>
-[ ]             [ ]     [ ]<br>
-                [S]     [S]</p>
-<p>0   1   2   3   4   5   6<br>
-[S] [S] ... (.) [ ] ... [ ]<br>
-[ ] [ ]         [ ]     [ ]<br>
-[ ]             [S]     [S]<br>
-                [ ]     [ ]</p>
-<p>Picosecond 4:<br>
- 0   1   2   3   4   5   6<br>
-[S] [S] ... ... ( ) ... [ ]<br>
-[ ] [ ]         [ ]     [ ]<br>
-[ ]             [S]     [S]<br>
-                [ ]     [ ]</p>
-<p>0   1   2   3   4   5   6<br>
-[ ] [ ] ... ... ( ) ... [ ]<br>
-[S] [S]         [S]     [S]<br>
-[ ]             [ ]     [ ]<br>
-                [ ]     [ ]</p>
-<p>Picosecond 5:<br>
- 0   1   2   3   4   5   6<br>
-[ ] [ ] ... ... [ ] (.) [ ]<br>
-[S] [S]         [S]     [S]<br>
-[ ]             [ ]     [ ]<br>
-                [ ]     [ ]</p>
-<p>0   1   2   3   4   5   6<br>
-[ ] [S] ... ... [S] (.) [S]<br>
-[ ] [ ]         [ ]     [ ]<br>
-[S]             [ ]     [ ]<br>
-                [ ]     [ ]</p>
-<p>Picosecond 6:<br>
- 0   1   2   3   4   5   6<br>
-[ ] [S] ... ... [S] ... (S)<br>
-[ ] [ ]         [ ]     [ ]<br>
-[S]             [ ]     [ ]<br>
-                [ ]     [ ]</p>
-<p>0   1   2   3   4   5   6<br>
-[ ] [ ] ... ... [ ] ... ( )<br>
-[S] [S]         [S]     [S]<br>
-[ ]             [ ]     [ ]<br>
-                [ ]     [ ]<br>
-In this situation, you are caught in layers 0 and 6,<br>
+<p>In this situation, you are caught in layers 0 and 6,<br>
 because your packet entered the layer when its scanner was at the top when you entered it.<br>
 You are not caught in layer 1, since the scanner moved into the top of the layer once you were already there.</p>
 <p>The severity of getting caught on a layer is equal to its depth multiplied by its range.<br>
@@ -11929,7 +11796,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># figure out how to traverse a list forwards, then backwards based on the tick</span>
@@ -11942,7 +11809,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Understanding generators (keyword=yield) https://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do</span>
@@ -11983,7 +11850,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
@@ -12018,7 +11885,7 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Elegant answer that only works in Python3</span>
@@ -12036,32 +11903,10 @@ In the example above, the trip severity is 0<em>3 + 6</em>4 = 24.</p>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-cyan-fg">  File </span><span class="ansi-green-fg">&#34;&lt;ipython-input-50-e8c993d2576d&gt;&#34;</span><span class="ansi-cyan-fg">, line </span><span class="ansi-green-fg">5</span>
-<span class="ansi-red-fg">    yield from list1</span>
-             ^
-<span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> invalid syntax
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Alternative solution using itertools.cycle</span>
@@ -12121,7 +11966,7 @@ Finding nth element in generator
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[51]:</div>
+<div class="prompt output_prompt">Out[18]:</div>
 
 
 
@@ -12138,7 +11983,7 @@ Finding nth element in generator
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">move_scanner</span><span class="p">(</span><span class="n">length</span><span class="p">,</span><span class="n">tick</span><span class="p">):</span>
@@ -12160,7 +12005,21 @@ Finding nth element in generator
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Alternative way of finding index of the scanner, </span>
+<span class="c1"># sum(d*r for d,r,R in S if not d%R) # R= 2*range-2, d%R gives position of scanner</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span> <span class="n">move_scanner</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#Ans should be 0</span>
@@ -12199,7 +12058,7 @@ Finding nth element in generator
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># The user/pointer will be at layer n at n ticks.</span>
@@ -12236,7 +12095,7 @@ Pointer is at layer 4
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Creating the layers</span>
@@ -12265,7 +12124,7 @@ Pointer is at layer 4
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[88]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">test</span><span class="o">=</span><span class="p">[</span>
@@ -12283,7 +12142,7 @@ Pointer is at layer 4
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[57]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">create_layers</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
@@ -12299,7 +12158,7 @@ Pointer is at layer 4
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[57]:</div>
+<div class="prompt output_prompt">Out[24]:</div>
 
 
 
@@ -12316,7 +12175,7 @@ Pointer is at layer 4
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">INPUTS</span><span class="p">):</span>
@@ -12349,7 +12208,7 @@ Pointer is at layer 4
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[69]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">solve</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
@@ -12377,7 +12236,7 @@ Caught at layer 6 depth 4
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[69]:</div>
+<div class="prompt output_prompt">Out[26]:</div>
 
 
 
@@ -12394,7 +12253,7 @@ Caught at layer 6 depth 4
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[70]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -12412,7 +12271,7 @@ Caught at layer 6 depth 4
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[70]:</div>
+<div class="prompt output_prompt">Out[27]:</div>
 
 
 
@@ -12429,7 +12288,7 @@ Caught at layer 6 depth 4
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[71]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># My wrong answer</span>
@@ -12462,7 +12321,7 @@ Caught at layer 88 depth 1
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[71]:</div>
+<div class="prompt output_prompt">Out[28]:</div>
 
 
 
@@ -12479,7 +12338,7 @@ Caught at layer 88 depth 1
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Correct Answer</span>
@@ -12528,7 +12387,7 @@ Caught at layer 28 depth 8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># The error was caused by my poor way of parsing the input.txt</span>
@@ -12543,7 +12402,7 @@ Caught at layer 28 depth 8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Correction</span>
@@ -12562,7 +12421,7 @@ Caught at layer 28 depth 8
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[75]:</div>
+<div class="prompt output_prompt">Out[31]:</div>
 
 
 
@@ -12579,7 +12438,7 @@ Caught at layer 28 depth 8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[76]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">solve</span><span class="p">(</span><span class="n">INPUTS</span><span class="p">)</span>
@@ -12610,7 +12469,7 @@ Caught at layer 28 depth 8
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[76]:</div>
+<div class="prompt output_prompt">Out[32]:</div>
 
 
 
@@ -12643,7 +12502,7 @@ Caught at layer 28 depth 8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
@@ -12656,7 +12515,7 @@ Caught at layer 28 depth 8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[110]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">solve2</span><span class="p">(</span><span class="n">INPUTS</span><span class="p">):</span>
@@ -12695,7 +12554,7 @@ Caught at layer 28 depth 8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[111]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Demo of counter</span>
@@ -12735,7 +12594,7 @@ Caught at layer 28 depth 8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[112]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">solve2</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
@@ -12751,7 +12610,7 @@ Caught at layer 28 depth 8
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[112]:</div>
+<div class="prompt output_prompt">Out[36]:</div>
 
 
 
@@ -12768,7 +12627,7 @@ Caught at layer 28 depth 8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[113]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">solve2</span><span class="p">(</span><span class="n">INPUTS</span><span class="p">)</span>
@@ -12781,43 +12640,43 @@ Caught at layer 28 depth 8
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-113-8239ef474ffe&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>solve2<span class="ansi-blue-fg">(</span>INPUTS<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">&lt;ipython-input-110-9234ba9c5442&gt;</span> in <span class="ansi-cyan-fg">solve2</span><span class="ansi-blue-fg">(INPUTS)</span>
-<span class="ansi-green-intense-fg ansi-bold">      6</span> 
-<span class="ansi-green-intense-fg ansi-bold">      7</span>     <span class="ansi-green-fg">for</span> delay <span class="ansi-green-fg">in</span> itertools<span class="ansi-blue-fg">.</span>count<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">----&gt; 8</span><span class="ansi-red-fg">         </span>TICKS<span class="ansi-blue-fg">=</span>range<span class="ansi-blue-fg">(</span>max<span class="ansi-blue-fg">(</span>d<span class="ansi-blue-fg">.</span>keys<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">+</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">+</span>delay<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span>delay<span class="ansi-blue-fg">:</span><span class="ansi-blue-fg">]</span>
-<span class="ansi-green-intense-fg ansi-bold">      9</span>         caught<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0</span>
-<span class="ansi-green-intense-fg ansi-bold">     10</span> 
-
-<span class="ansi-red-fg">KeyboardInterrupt</span>: </pre>
 </div>
-</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Creating the layers</span>
+<span class="k">def</span> <span class="nf">create_layers2</span><span class="p">(</span><span class="n">input_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Inputs: str(layer_id,layer_length), eg. &#39;0: 3&#39;</span>
+<span class="sd">    Output: dict{key=layer_id, values=[0,1,2...layer_length],2*range-2 }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">list_</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">input_list</span><span class="p">:</span>
+        <span class="c1"># Parse string eg. &quot;0: 3&quot;</span>
+        <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;: &#39;</span><span class="p">)</span>
+        <span class="n">layer_id</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">layer_length</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
 
+        <span class="n">list_</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">layer_id</span><span class="p">,</span><span class="n">layer_length</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">layer_length</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">list_</span>
+        
+</pre></div>
+
+</div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[117]:</div>
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">M</span><span class="o">=</span><span class="n">create_layers2</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="n">M</span>
 </pre></div>
 
 </div>
@@ -12830,19 +12689,62 @@ Caught at layer 28 depth 8
 
 <div class="output_area">
 
-<div class="prompt"></div>
+<div class="prompt output_prompt">Out[57]:</div>
 
 
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-117-633e5fc6e9c1&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-green-fg">with</span> open<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;input.txt&#39;</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">as</span> f<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">print</span> <span class="ansi-blue-fg">[</span>i <span class="ansi-green-fg">for</span> i <span class="ansi-green-fg">in</span> f<span class="ansi-blue-fg">.</span>readlines<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>strip<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;\n&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span>
 
-<span class="ansi-red-fg">AttributeError</span>: &#39;list&#39; object has no attribute &#39;strip&#39;</pre>
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(0, 3, 4), (1, 2, 2), (4, 4, 6), (6, 4, 6)]</pre>
 </div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">S</span><span class="o">=</span><span class="n">create_layers2</span><span class="p">(</span><span class="n">INPUTS</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[81]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Correct answer online for Part 2</span>
+<span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="k">if</span> <span class="nb">all</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="n">d</span><span class="p">)</span><span class="o">%</span><span class="k">R</span> for d,r,R in S)).next()
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[81]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>3933124</pre>
+</div>
+
 </div>
 
 </div>
@@ -12854,12 +12756,88 @@ Caught at layer 28 depth 8
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">INPUT2</span> <span class="o">=</span> <span class="p">[(</span><span class="n">d</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">r</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">*</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">,&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;{}&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
-    <span class="n">part1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">d</span><span class="o">*</span><span class="n">r</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">R</span> <span class="ow">in</span> <span class="n">S</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">d</span><span class="o">%</span><span class="k">R</span>)
-    <span class="n">part2</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">c</span><span class="p">()</span> <span class="k">if</span> <span class="nb">all</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="n">d</span><span class="p">)</span><span class="o">%</span><span class="k">R</span> for d, _, R in S))
-    <span class="k">return</span> <span class="n">part1</span><span class="p">,</span> <span class="n">part2</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">## Breaking it down</span>
+<span class="nb">next</span>                          <span class="c1">#python3 syntax, python2 is .next()</span>
+<span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="c1"># generator that produces 0,1,2,3...</span>
+ <span class="k">if</span> 
+ <span class="nb">all</span><span class="p">(</span>                         <span class="c1"># returns True only if all inner conditions are True</span>
+     <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">d</span><span class="p">)</span><span class="o">%</span><span class="k">R</span> for d,r,R in S   # formula outputting index
+ <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
 
-<span class="n">solve</span><span class="p">(</span><span class="s1">&#39;0: 3</span><span class="se">\n</span><span class="s1">1: 2</span><span class="se">\n</span><span class="s1">4: 4</span><span class="se">\n</span><span class="s1">6: 4</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># every i in the list comprehension needs to be a non-None value before all(...) returns True</span>
+<span class="nb">all</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="nb">all</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="bp">None</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[85]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>False</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">## Better worded but same model answer solution</span>
+
+<span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;: &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
+
+<span class="n">heights</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span> <span class="nb">int</span><span class="p">(</span><span class="n">height</span><span class="p">)</span> <span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">height</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">scanner</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="n">time</span> <span class="o">%</span> <span class="p">((</span><span class="n">height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">offset</span> <span class="k">if</span> <span class="n">offset</span> <span class="o">&gt;</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">offset</span>
+
+<span class="n">part1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">pos</span> <span class="o">*</span> <span class="n">heights</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">heights</span> <span class="k">if</span> <span class="n">scanner</span><span class="p">(</span><span class="n">heights</span><span class="p">[</span><span class="n">pos</span><span class="p">],</span> <span class="n">pos</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">part2</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">wait</span> <span class="k">for</span> <span class="n">wait</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">scanner</span><span class="p">(</span><span class="n">heights</span><span class="p">[</span><span class="n">pos</span><span class="p">],</span> <span class="n">wait</span> <span class="o">+</span> <span class="n">pos</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">heights</span><span class="p">))</span>
+<span class="n">permalinkembedsavegive</span> <span class="n">gold</span>
 </pre></div>
 
 </div>
