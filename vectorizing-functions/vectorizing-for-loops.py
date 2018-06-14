@@ -10,13 +10,13 @@
 # 
 # http://kitchingroup.cheme.cmu.edu/blog/2013/02/26/Sums-products-and-linear-algebra-notation-avoiding-loops-where-possible/
 
-# In[11]:
+# In[24]:
 
 
 import numpy as np
 
 
-# In[29]:
+# In[25]:
 
 
 # Problem 1
@@ -39,7 +39,7 @@ def sumproducts(x, y):
     
 
 
-# In[30]:
+# In[26]:
 
 
 # Solution 1
@@ -50,18 +50,26 @@ def sumproducts_vectorized(x,y):
     return np.sum(x)*np.sum(y)
 
 
-# In[31]:
+# In[27]:
 
 
 # Test 1
-print sumproducts(np.arange(100),np.arange(100))
-print sumproducts_vectorized(np.arange(100),np.arange(100))
+old=sumproducts(np.arange(100),np.arange(100))
+new=sumproducts_vectorized(np.arange(100),np.arange(100))
 
-get_ipython().magic(u'timeit -n 100 sumproducts(np.arange(100),np.arange(100))')
-get_ipython().magic(u'timeit -n 100 sumproducts_vectorized(np.arange(100),np.arange(100))')
+try: 
+    assert(old==new)
+    print 'test passed'
+    get_ipython().magic(u'timeit -n 100 old')
+    get_ipython().magic(u'timeit -n 100 new')
+    
+except AssertionError:
+    print 'test failed'
+    print 'New solution gave a different ans ({}) vs. original ({})'.format(new,old)
 
 
-# In[3]:
+
+# In[28]:
 
 
 # Problem 2
@@ -80,7 +88,7 @@ def countlower(x, y):
     return result
 
 
-# In[32]:
+# In[38]:
 
 
 # Solution 2
@@ -89,18 +97,61 @@ def countlower_vectorized(x,y):
     Return the number of pairs i, j such that x[i] < y[j].
     """
     
-    return len(np.array(x)<np.array(y))
+    return np.sum(np.searchsorted(np.sort(x),y))
 
 
-# In[34]:
+# In[ ]:
+
+
+get_ipython().magic(u'pinfo2 np.searchsorted')
+
+"""
+    Find the indices into a sorted array `a` such that, if the
+    corresponding elements in `v` were inserted before the indices, the
+    order of `a` would be preserved.
+    
+    Examples
+    --------
+    >>> np.searchsorted([1,2,3,4,5], 3)
+    2
+    >>> np.searchsorted([1,2,3,4,5], 3, side='right')
+    3
+    >>> np.searchsorted([1,2,3,4,5], [-10, 10, 2, 3])
+    array([0, 5, 1, 2])
+"""
+
+
+# In[37]:
+
+
+np.searchsorted([1,2,4],[3,5])
+# The output [2,3] is equivalent to saying for each term in [3,5]
+# For 3, there are 2 items in 1st list that are smaller
+# For 5, there are 3 items in 1st list that are smaller
+# summing up the results, we get all pairs of x[i]<y[j]
+
+
+# In[36]:
+
+
+countlower([1,2,4],[3,5])
+
+
+# In[39]:
 
 
 # Test 2
-print countlower(np.arange(100),np.arange(100))
-print countlower_vectorized(np.arange(100),np.arange(100))
+old=countlower(np.arange(100),np.arange(100))
+new=countlower_vectorized(np.arange(100),np.arange(100))
 
-#%timeit -n 100 sumproducts(np.arange(100),np.arange(100))
-#%timeit -n 100 sumproducts_vectorized(np.arange(100),np.arange(100))
+try:
+    assert(old==new)
+    print 'test passed'
+    get_ipython().magic(u'timeit -n 100 old')
+    get_ipython().magic(u'timeit -n 100 new')
+except AssertionError:
+    print 'test failed'
+    print 'New solution gave a different ans ({}) vs. original ({})'.format(new,old)
 
 
 # In[ ]:
