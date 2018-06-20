@@ -10,13 +10,13 @@
 # 
 # http://kitchingroup.cheme.cmu.edu/blog/2013/02/26/Sums-products-and-linear-algebra-notation-avoiding-loops-where-possible/
 
-# In[24]:
+# In[1]:
 
 
 import numpy as np
 
 
-# In[25]:
+# In[2]:
 
 
 # Problem 1
@@ -39,7 +39,7 @@ def sumproducts(x, y):
     
 
 
-# In[26]:
+# In[3]:
 
 
 # Solution 1
@@ -50,7 +50,7 @@ def sumproducts_vectorized(x,y):
     return np.sum(x)*np.sum(y)
 
 
-# In[27]:
+# In[4]:
 
 
 # Test 1
@@ -69,7 +69,7 @@ except AssertionError:
 
 
 
-# In[28]:
+# In[5]:
 
 
 # Problem 2
@@ -88,7 +88,7 @@ def countlower(x, y):
     return result
 
 
-# In[38]:
+# In[6]:
 
 
 # Solution 2
@@ -100,7 +100,7 @@ def countlower_vectorized(x,y):
     return np.sum(np.searchsorted(np.sort(x),y))
 
 
-# In[ ]:
+# In[7]:
 
 
 get_ipython().magic(u'pinfo2 np.searchsorted')
@@ -121,7 +121,7 @@ get_ipython().magic(u'pinfo2 np.searchsorted')
 """
 
 
-# In[37]:
+# In[8]:
 
 
 np.searchsorted([1,2,4],[3,5])
@@ -131,13 +131,13 @@ np.searchsorted([1,2,4],[3,5])
 # summing up the results, we get all pairs of x[i]<y[j]
 
 
-# In[36]:
+# In[9]:
 
 
 countlower([1,2,4],[3,5])
 
 
-# In[39]:
+# In[10]:
 
 
 # Test 2
@@ -154,7 +154,7 @@ except AssertionError:
     print 'New solution gave a different ans ({}) vs. original ({})'.format(new,old)
 
 
-# In[ ]:
+# In[12]:
 
 
 # Problem 3
@@ -176,8 +176,31 @@ def cleanup(x, missing=-1, value=0):
     return np.array(result)
 
 
+# In[13]:
+
+
+cleanup(np.arange(10))
+
+
 # In[ ]:
 
 
 # Solution 3
+
+
+# In[ ]:
+
+
+# Test 3
+old=cleanup(np.arange(100),np.arange(100))
+new=cleanup_vectorized(np.arange(100),np.arange(100))
+
+try:
+    assert(old==new)
+    print 'test passed'
+    get_ipython().magic(u'timeit -n 100 old')
+    get_ipython().magic(u'timeit -n 100 new')
+except AssertionError:
+    print 'test failed'
+    print 'New solution gave a different ans ({}) vs. original ({})'.format(new,old)
 
